@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block title %}
+  <title>Postfix Mailbox Management</title>
+{% endblock %}
+{% block content %}
+    <div class="panel panel-primary">
+
+      <div class="panel-heading">
+        <h2>Postfix Mailbox Management</h2>
+      </div>
+
+      <div class="panel-body">
+      <style type="text/css">.control-label { text-align: right; }</style>
+        <h4 color="lightgray">{% if object %}Edit{% else %}Create{% endif %} Mailbox</h4>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form layout="horizontal" %}
+            {% buttons %}
+              <button type="submit" class="btn btn-primary"> Submit </button>
+              <button type="button" class="btn btn-primary" onclick="javascript:window.location='{% url 'mailboxes' %}'"> Cancel </button>
+            {% endbuttons %}
+        </form>
+      </div>
+
+      <div class="panel-body">
+
+        <table width="90%" role="list" align="center" class="table table-striped">
+          <caption>Mailbox List</caption>
+          <tbody>
+          {% if mailbox_list %}
+            <tr bgcolor="lightgray" role="heading">
+              <th>Domain</th>
+              <th>Username</th>
+              <th>Full Name</th>
+              <th>Max Quota (MB)</th>
+              <th>Disposition</th>
+              <th colspan="2">Created</th>
+            </tr>
+          {% endif %}
+          {% for mailbox in mailbox_list %}
+            <tr role="listitem">
+              <td>{{ mailbox.domain.name }}</td>
+              <td>{{ mailbox.username }}</td>
+              <td>{{ mailbox.name }}</td>
+              <td>{{ mailbox.quota_mb }}</td>
+              <td>{{ mailbox.disposition }}</td>
+              <td>{{ mailbox.created }}</td>
+              <td class="text-right">
+                  <a href="{% url 'mailbox_edit' pk=mailbox.id %}" class="glyphicon glyphicon-edit"></a>
+                  &nbsp;&nbsp;
+                  <a href="{% url 'mailbox_delete' pk=mailbox.id %}" class="glyphicon glyphicon-remove"></a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colpsan="6" class="text-center">No mailboxes found</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+{% endblock %}

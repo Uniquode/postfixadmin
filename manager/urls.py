@@ -12,5 +12,17 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.Home, name='home'),
+    url(r'^$', views.HomeView.as_view(), name='home'),
+    url(r'^domain/$', views.DomainCreateView.as_view(), name='domains'),
+    url(r'^domain/(?P<pk>\d+)/edit$', views.DomainUpdateView.as_view(), name='domain_edit'),
+    url(r'^domain/(?P<pk>\d+)/del$', views.DomainDeleteView.as_view(), name='domain_delete'),
+    url(r'^mailbox/$', views.MailboxCreateView.as_view(), name='mailboxes'),
+    url(r'^mailbox/(?P<pk>\d+)/edit$', views.MailboxUpdateView.as_view(), name='mailbox_edit'),
+    url(r'^mailbox/(?P<pk>\d+)/del$', views.MailboxDeleteView.as_view(), name='mailbox_delete'),
+    url(r'^alias/$', views.AliasCreateView.as_view(), name='aliases'),
+    url(r'^alias/(?P<pk>\d+)/edit$', views.AliasUpdateView.as_view(), name='alias_edit'),
+    url(r'^alias/(?P<pk>\d+)/del$', views.AliasDeleteView.as_view(), name='alias_delete'),
+    url(r'^vacation/$', views.VacationCreateView.as_view(), name='vacations'),
+    url(r'^vacation/(?P<pk>\d+)/edit$', views.VacationUpdateView.as_view(), name='vacation_edit'),
+    url(r'^vacation/(?P<pk>\d+)/del$', views.VacationDeleteView.as_view(), name='vacation_delete'),
 ]

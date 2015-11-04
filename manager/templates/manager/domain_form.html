@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block title %}
+  <title>Postfix Domain Management</title>
+{% endblock %}
+{% block content %}
+    <div class="panel panel-primary">
+
+      <div class="panel-heading">
+        <h2>Postfix Domain Management</h2>
+      </div>
+
+      <div class="panel-body">
+      <style type="text/css">.control-label { text-align: right; }</style>
+        <h4 color="lightgray">{% if object %}Edit{% else %}Create{% endif %} Domain</h4>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form layout="horizontal" %}
+            {% buttons %}
+              <button type="submit" class="btn btn-primary"> Submit </button>
+              <button type="button" class="btn btn-primary" onclick="javascript:window.location='{% url 'domains' %}'"> Cancel </button>
+            {% endbuttons %}
+        </form>
+      </div>
+
+      <div class="panel-body">
+
+        <table width="90%" role="list" align="center" class="table table-striped">
+          <caption>Domain List</caption>
+          <tbody>
+          {% if domain_list %}
+            <tr bgcolor="lightgray" role="heading">
+              <th>Domain</th>
+              <th>MX2</th>
+              <th>Active</th>
+              <th>Max Quota (MB)</th>
+              <th colspan="2">Created</th>
+            </tr>
+          {% endif %}
+          {% for domain in domain_list %}
+            <tr role="listitem">
+              <td>{{ domain.name }}</td>
+              <td>{{ domain.is_backup_mx }}</td>
+              <td>{{ domain.is_active }}</td>
+              <td>{{ domain.maxquota_mb }}</td>
+              <td>{{ domain.created }}</td>
+              <td class="text-right">
+                  <a href="{% url 'domain_edit' pk=domain.id %}" class="glyphicon glyphicon-edit"></a>
+                  &nbsp;&nbsp;
+                  <a href="{% url 'domain_delete' pk=domain.id %}" class="glyphicon glyphicon-remove"></a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colpsan="6" class="text-center">No domains found</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+{% endblock %}

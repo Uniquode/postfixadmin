@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block title %}
+  <title>Postfix Alias Management</title>
+{% endblock %}
+{% block content %}
+    <div class="panel panel-primary">
+
+      <div class="panel-heading">
+        <h2>Postfix Alias Management</h2>
+      </div>
+
+      <div class="panel-body">
+        <h4 color="lightgray">Delete Alias</h4>
+          <div class="table-responsive">
+            <table width="90%" role="list" align="center" class="table">
+              <caption>Alias: {{ object.address }}@{{ object.domain.name }}</caption>
+                 <tr>
+                  <th class="text-right">Address</th>
+                  <td>{{ object.address }}</td>
+                  <th class="text-right">Active</th>
+                  <td>{{ object.is_active }}</td>
+                </tr>
+                <tr>
+                  <th class="text-right" rowspan="2">Disposition</th>
+                  <td rowspan="2">{{ object.disposition }}</td>
+                </tr>
+                <tr>
+                  <th class="text-right">Created</th>
+                  <td rowspan="2">{{ object.created }}</td>
+                </tr>
+                <tr>
+                  <th class="text-right">Modified</th>
+                  <td rowspan="2">{{ object.modified }}</td>
+                </tr>
+            </table>
+          </div>
+      </div>
+      <div class="panel-footer">
+        <form method="post" role="form">
+        {% csrf_token %}
+        {% buttons %}
+          <button type="submit" class="btn btn-primary"> Delete </button>
+          <button type="button" class="btn btn-primary" onclick="window.location='{% url 'aliases' %}'"> Cancel </button>
+        {% endbuttons %}
+        </form>
+      </div>
+
+    </div>
+{% endblock %}
