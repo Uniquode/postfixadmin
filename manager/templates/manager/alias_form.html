@@ -43,7 +43,7 @@
               <td>{{ alias.address }}</td>
               <td>{{ alias.is_active }}</td>
               <td>{{ alias.disposition }}</td>
-              <td>{{ alias.created }}</td>
+              <td>{{ alias.created|date:'Y-m-d H:i' }}</td>
               <td class="text-right">
                   <a href="{% url 'alias_edit' pk=alias.id %}" class="glyphicon glyphicon-edit"></a>
                   &nbsp;&nbsp;

@@ -33,8 +33,8 @@
               <th>Domain</th>
               <th>Username</th>
               <th>Full Name</th>
-              <th>Max Quota (MB)</th>
-              <th>Disposition</th>
+              <th>Quota(mb)</th>
+              <th>Vacation?</th>
               <th colspan="2">Created</th>
             </tr>
           {% endif %}
@@ -43,9 +43,9 @@
               <td>{{ mailbox.domain.name }}</td>
               <td>{{ mailbox.username }}</td>
               <td>{{ mailbox.name }}</td>
-              <td>{{ mailbox.quota_mb }}</td>
-              <td>{{ mailbox.disposition }}</td>
-              <td>{{ mailbox.created }}</td>
+              <td>{% if mailbox.quota_mb %}{{ mailbox.quota_mb }}{% endif %}</td>
+              <td>{% if mailbox.vacation_enabled %}Yes{% endif %}</td>
+              <td>{{ mailbox.created|date:'Y-m-d H:i' }}</td>
               <td class="text-right">
                   <a href="{% url 'mailbox_edit' pk=mailbox.id %}" class="glyphicon glyphicon-edit"></a>
                   &nbsp;&nbsp;

@@ -1,5 +1,6 @@
 from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
-from .views_base import DomainView, MailboxView, AliasView, VacationView
+from .views_base import DomainView, MailboxView, AliasView, MapView
+
 
 class HomeView(TemplateView):
     template_name = 'home.html'
@@ -41,14 +42,15 @@ class AliasDeleteView(AliasView, DeleteView):
     pass
 
 
-class VacationCreateView(VacationView, CreateView):
+class MapCreateView(MapView, CreateView):
     pass
 
 
-class VacationUpdateView(VacationView, UpdateView):
+class MapUpdateView(MapView, UpdateView):
     pass
 
 
-class VacationDeleteView(VacationView, DeleteView):
+class MapDeleteView(MapView, DeleteView):
     pass
+
 

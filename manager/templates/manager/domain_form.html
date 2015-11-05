@@ -31,19 +31,31 @@
           {% if domain_list %}
             <tr bgcolor="lightgray" role="heading">
               <th>Domain</th>
-              <th>MX2</th>
               <th>Active</th>
-              <th>Max Quota (MB)</th>
+              <th>2ndMX</th>
+              <th>Mailbox></th>
+              <th>Quota(mb)</th>
+              <th>Mailboxes</th>
+              <th>Aliases</th>
               <th colspan="2">Created</th>
             </tr>
           {% endif %}
           {% for domain in domain_list %}
             <tr role="listitem">
               <td>{{ domain.name }}</td>
-              <td>{{ domain.is_backup_mx }}</td>
               <td>{{ domain.is_active }}</td>
-              <td>{{ domain.maxquota_mb }}</td>
-              <td>{{ domain.created }}</td>
+              <td>{{ domain.is_backup_mx }}</td>
+              <td>{{ domain.allow_mailbox }}</td>
+              {% if domain.is_backup_mx %}
+              <td></td><td></td><td></td>
+              {% elif not domain.allow_mailbox and domain.mailboxes == 0 %}
+              <td></td><td></td><td></td>
+              {% else %}
+              <td>{% if domain.maxquota_mb %}{{ domain.maxquota_mb }}{% endif %}</td>
+              <td>{{ domain.mailboxes }}</td>
+              <td>{{ domain.aliases }}</td>
+              {% endif %}
+              <td>{{ domain.created|date:'Y-m-d H:i' }}</td>
               <td class="text-right">
                   <a href="{% url 'domain_edit' pk=domain.id %}" class="glyphicon glyphicon-edit"></a>
                   &nbsp;&nbsp;

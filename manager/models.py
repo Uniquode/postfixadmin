@@ -12,27 +12,14 @@ class Record(models.Model):
         abstract = True
 
 
-class Admin(Record):
-    """ administrative users """
-    user = models.OneToOneField(settings.AUTH_USER_MODEL)
-
-    @classmethod
-    def create_admin_for_user(cls, user):
-        """ shortcut method to create a user from a given user model """
-        admin = Admin(user=user, is_active=True)
-        admin.save()
-        return admin
-
-    def __str__(self):
-        return self.user.name
-
-
 class Domain(Record):
     name = models.CharField(max_length=255, unique=True)
     description = models.CharField(max_length=255, blank=True)
     transport = models.CharField(max_length=255, blank=True)
     maxquota_mb = models.IntegerField(verbose_name='Max Quota', default=0)
     is_backup_mx = models.BooleanField(verbose_name='Backup MX', default=False)
+    allow_mailbox = models.BooleanField(verbose_name='Allow New Mailboxes', default=True)
+    auth_source = models.TextField(verbose_name='Authentication Source', blank=True)
 
     @classmethod
     def at_domain(cls, domain=None):
@@ -54,10 +41,14 @@ class Mailbox(Record):
     """ Mailboxes """
     domain = models.ForeignKey(Domain, null=True)
     username = models.CharField(max_length=255)
-    credential = models.TextField(verbose_name='Password')
+    credential = models.TextField(verbose_name='Password', blank=True)
     name = models.CharField(verbose_name='Full Name', max_length=255)
     quota_mb = models.IntegerField(verbose_name='Quota', default=0)
     disposition = models.TextField(blank=True, null=True)
+    vacation_enabled = models.BooleanField(default=False)
+    vacation_subject = models.CharField(max_length=255, blank=True, null=True)
+    vacation_body = models.TextField(blank=True, null=True)
+    vacation_cache = models.TextField(editable=False, blank=True, null=True)
 
     @property
     def address(self):
@@ -87,16 +78,26 @@ class Alias(Record):
         unique_together = ('domain', 'name',)
 
 
-class Vacation(Record):
-    """ vacation records """
-    mailbox = models.OneToOneField(Mailbox)
-    response_subject = models.CharField(max_length=255)
-    response_body = models.TextField()
-    cache = models.TextField(editable=False)
+class Map(Record):
+    """ Generic map definitions """
+    name = models.CharField(max_length=64,unique=True)
+    fn1 = models.CharField(verbose_name='Field#1 Name', max_length=64, default='Value')
+    fn2 = models.CharField(verbose_name='Field#2 Name', max_length=64, blank=True, null=True)
+    fn3 = models.CharField(verbose_name='Field#3 Name', max_length=64, blank=True, null=True)
 
-    @property
-    def domain(self):
-        return self.mailbox.domain if self.mailbox else None
+    def __str__(self):
+        return self.name
 
-    class Meta:
-        unique_together = ('mailbox',)
+
+class MapValues(Record):
+    """ Generic key->value mappings for maps """
+    map = models.ForeignKey(Map)
+    key = models.CharField(max_length=255)
+    v1 = models.TextField(verbose_name='Value#1', blank=True)
+    v2 = models.TextField(verbose_name='Value#2', blank=True, null=True)
+    v3 = models.TextField(verbose_name='Value#3', blank=True, null=True)
+
+    def __str__(self):
+        return "{0}:{1}={2}".format(self.map, self.key,
+                ':'.join([ x for x in (self.v1, self.v2, self.v3) if x is not None ]))
+

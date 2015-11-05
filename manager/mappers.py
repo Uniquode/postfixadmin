@@ -1,6 +1,6 @@
 
 from nap import datamapper
-from .models import Domain, Mailbox, Alias, Vacation, Admin
+from .models import Domain, Mailbox, Alias
 
 
 class DomainMapper(datamapper.ModelDataMapper):
@@ -23,9 +23,3 @@ class AliasMapper(datamapper.ModelDataMapper):
         model = Alias
         fields = '__all__'
 
-
-class VacationMapper(datamapper.ModelDataMapper):
-
-    class Meta:
-        model = Vacation
-        fields = '__all__'

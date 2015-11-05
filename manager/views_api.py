@@ -1,8 +1,7 @@
 from nap.rest.views import BaseListView, ListGetMixin
 
-from .models import Domain, Mailbox, Alias, Vacation
-from .mappers import DomainMapper, MailboxMapper, AliasMapper, VacationMapper
-from .views_base import DomainView, MailboxView, AliasView, VacationView
+from .models import Domain, Mailbox, Alias
+from .mappers import DomainMapper, MailboxMapper, AliasMapper
 
 # Endpoints
 # 01. list domains (name contains)
@@ -28,8 +27,4 @@ class ApiAliasListView(ListGetMixin, BaseListView):
     model = Alias
     mapper_class = AliasMapper
 
-
-class ApiVacationListView(ListGetMixin, BaseListView):
-    model = Vacation
-    mapper_class = VacationMapper
 

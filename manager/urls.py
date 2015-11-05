@@ -22,7 +22,7 @@ urlpatterns = [
     url(r'^alias/$', views.AliasCreateView.as_view(), name='aliases'),
     url(r'^alias/(?P<pk>\d+)/edit$', views.AliasUpdateView.as_view(), name='alias_edit'),
     url(r'^alias/(?P<pk>\d+)/del$', views.AliasDeleteView.as_view(), name='alias_delete'),
-    url(r'^vacation/$', views.VacationCreateView.as_view(), name='vacations'),
-    url(r'^vacation/(?P<pk>\d+)/edit$', views.VacationUpdateView.as_view(), name='vacation_edit'),
-    url(r'^vacation/(?P<pk>\d+)/del$', views.VacationDeleteView.as_view(), name='vacation_delete'),
+    url(r'^map/$', views.MapCreateView.as_view(), name='maps'),
+    url(r'^map/(?P<pk>\d+)/edit$', views.MapUpdateView.as_view(), name='map_edit'),
+    url(r'^map/(?P<pk>\d+)/del$', views.MapDeleteView.as_view(), name='map_delete'),
 ]

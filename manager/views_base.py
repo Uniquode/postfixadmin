@@ -1,6 +1,6 @@
 from django.core.urlresolvers import reverse_lazy
-from .models import Domain, Mailbox, Alias, Vacation
-from .forms import DomainForm, MailboxForm, AliasForm, VacationForm
+from .models import Domain, Mailbox, Alias, Map
+from .forms import DomainForm, MailboxForm, AliasForm, MapForm
 
 
 class DomainView(object):
@@ -36,12 +36,12 @@ class AliasView(object):
         return context
 
 
-class VacationView(object):
-    model = Vacation
-    form_class = VacationForm
-    success_url = reverse_lazy('vacations')
+class MapView(object):
+    model = Map
+    form_class = MapForm
+    success_url = reverse_lazy('maps')
 
     def get_context_data(self, **kwargs):
-        context = super(VacationView, self).get_context_data(**kwargs)
-        context['vacation_list'] = Vacation.objects.all()
+        context = super(MapView, self).get_context_data(**kwargs)
+        context['map_list'] = Map.objects.all()
         return context

@@ -21,7 +21,4 @@ urlpatterns = [
     url(r'^alias/$', views.ApiAliasListView.as_view()),
 #   url(r'^api/alias/(?P<pk>\d+)/edit$', views.AliasUpdateView.as_view(), name='alias_edit'),
 #   url(r'^api/alias/(?P<pk>\d+)/del$', views.AliasDeleteView.as_view(), name='alias_delete'),
-    url(r'^vacation/$', views.ApiVacationListView.as_view()),
-#   url(r'^api/vacation/(?P<pk>\d+)/edit$', views.VacationUpdateView.as_view(), name='vacation_edit'),
-#   url(r'^api/vacation/(?P<pk>\d+)/del$', views.VacationDeleteView.as_view(), name='vacation_delete'),
 ]
