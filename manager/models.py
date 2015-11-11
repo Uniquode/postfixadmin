@@ -80,24 +80,23 @@ class Alias(Record):
 
 class Map(Record):
     """ Generic map definitions """
-    name = models.CharField(max_length=64,unique=True)
-    fn1 = models.CharField(verbose_name='Field#1 Name', max_length=64, default='Value')
-    fn2 = models.CharField(verbose_name='Field#2 Name', max_length=64, blank=True, null=True)
-    fn3 = models.CharField(verbose_name='Field#3 Name', max_length=64, blank=True, null=True)
+    name = models.CharField(verbose_name='Map Name', max_length=64, unique=True)
+    fn1 = models.CharField(verbose_name='Field Name 1', max_length=64, default='Value')
+    fn2 = models.CharField(verbose_name='Field Name 2', max_length=64, blank=True, null=True)
+    fn3 = models.CharField(verbose_name='Field Name 3', max_length=64, blank=True, null=True)
 
     def __str__(self):
         return self.name
 
 
-class MapValues(Record):
+class MapValue(Record):
     """ Generic key->value mappings for maps """
     map = models.ForeignKey(Map)
     key = models.CharField(max_length=255)
-    v1 = models.TextField(verbose_name='Value#1', blank=True)
-    v2 = models.TextField(verbose_name='Value#2', blank=True, null=True)
-    v3 = models.TextField(verbose_name='Value#3', blank=True, null=True)
+    v1 = models.TextField(verbose_name='Value 1', blank=True)
+    v2 = models.TextField(verbose_name='Value 2', blank=True, null=True)
+    v3 = models.TextField(verbose_name='Value 3', blank=True, null=True)
 
     def __str__(self):
         return "{0}:{1}={2}".format(self.map, self.key,
                 ':'.join([ x for x in (self.v1, self.v2, self.v3) if x is not None ]))
-

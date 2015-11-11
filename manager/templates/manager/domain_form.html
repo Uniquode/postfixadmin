@@ -7,7 +7,7 @@
     <div class="panel panel-primary">
 
       <div class="panel-heading">
-        <h2>Postfix Domain Management</h2>
+        <h2>Postfix Domain Manager</h2>
       </div>
 
       <div class="panel-body">
@@ -33,7 +33,7 @@
               <th>Domain</th>
               <th>Active</th>
               <th>2ndMX</th>
-              <th>Mailbox></th>
+              <th>Mailbox</th>
               <th>Quota(mb)</th>
               <th>Mailboxes</th>
               <th>Aliases</th>
@@ -55,8 +55,8 @@
               <td>{{ domain.mailboxes }}</td>
               <td>{{ domain.aliases }}</td>
               {% endif %}
-              <td>{{ domain.created|date:'Y-m-d H:i' }}</td>
-              <td class="text-right">
+              <td>{{ domain.created|date:'Y-m-d_H:i' }}</td>
+              <td class="text-right nowrap">
                   <a href="{% url 'domain_edit' pk=domain.id %}" class="glyphicon glyphicon-edit"></a>
                   &nbsp;&nbsp;
                   <a href="{% url 'domain_delete' pk=domain.id %}" class="glyphicon glyphicon-remove"></a>

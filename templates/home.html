@@ -3,5 +3,28 @@
   <title>Postfix Administration</title>
 {% endblock %}
 {% block content %}
-    <p>Hello world</p>
+
+    <div class="panel panel-primary">
+
+      <div class="panel-heading">
+        <h2>Postfix Alias Manager</h2>
+      </div>
+
+      <div class="panel-body">
+      <style type="text/css">.control-label { text-align: right; }</style>
+        <h4 color="lightgray">{% if object %}Edit{% else %}Create{% endif %} Alias</h4>
+        <form method="post" class="form">
+            {% csrf_token %}
+            {% bootstrap_form form layout="horizontal" %}
+            {% buttons %}
+              <button type="submit" class="btn btn-primary"> Submit </button>
+              <button type="button" class="btn btn-primary" onclick="javascript:window.location='{% url 'aliases' %}'"> Cancel </button>
+            {% endbuttons %}
+        </form>
+      </div>
+
+      <div class="panel-body">
+      </div>
+
+    </div>
 {% endblock %}

@@ -7,7 +7,7 @@
     <div class="panel panel-primary">
 
       <div class="panel-heading">
-        <h2>Postfix Mailbox Management</h2>
+        <h2>Postfix Mailbox Manager</h2>
       </div>
 
       <div class="panel-body">
@@ -45,8 +45,8 @@
               <td>{{ mailbox.name }}</td>
               <td>{% if mailbox.quota_mb %}{{ mailbox.quota_mb }}{% endif %}</td>
               <td>{% if mailbox.vacation_enabled %}Yes{% endif %}</td>
-              <td>{{ mailbox.created|date:'Y-m-d H:i' }}</td>
-              <td class="text-right">
+              <td>{{ mailbox.created|date:'Y-m-d_H:i' }}</td>
+              <td class="text-right nowrap">
                   <a href="{% url 'mailbox_edit' pk=mailbox.id %}" class="glyphicon glyphicon-edit"></a>
                   &nbsp;&nbsp;
                   <a href="{% url 'mailbox_delete' pk=mailbox.id %}" class="glyphicon glyphicon-remove"></a>

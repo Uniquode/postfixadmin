@@ -1,5 +1,5 @@
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView
-from .views_base import DomainView, MailboxView, AliasView, MapView
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, ListView
+from .views_base import DomainView, MailboxView, AliasView, MapView, MapValuesView
 
 
 class HomeView(TemplateView):
@@ -53,4 +53,18 @@ class MapUpdateView(MapView, UpdateView):
 class MapDeleteView(MapView, DeleteView):
     pass
 
+
+class MapValueCreateView(MapValuesView, CreateView):
+    pass
+
+
+class MapValueUpdateView(MapValuesView, UpdateView):
+    pass
+
+
+class MapValueDeleteView(MapValuesView, DeleteView):
+
+    def get(self, *args, **kwargs):
+        """ Bypass the usual delete confirmation and just delete """
+        return self.post(*args, **kwargs)
 

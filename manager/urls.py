@@ -25,4 +25,7 @@ urlpatterns = [
     url(r'^map/$', views.MapCreateView.as_view(), name='maps'),
     url(r'^map/(?P<pk>\d+)/edit$', views.MapUpdateView.as_view(), name='map_edit'),
     url(r'^map/(?P<pk>\d+)/del$', views.MapDeleteView.as_view(), name='map_delete'),
+    url(r'^maps/(?P<map_id>\d+)?$', views.MapValueCreateView.as_view(), name='map_values'),
+    url(r'^maps/(?P<pk>\d+)/edit', views.MapValueUpdateView.as_view(), name='value_edit'),
+    url(r'^maps/(?P<pk>\d+)/del', views.MapValueDeleteView.as_view(), name='value_delete'),
 ]

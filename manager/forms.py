@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from .models import Domain, Mailbox, Alias, Map
+from .models import Domain, Mailbox, Alias, Map, MapValue
 
 
 class DomainForm(forms.ModelForm):
@@ -24,8 +24,6 @@ class MailboxForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(MailboxForm, self).__init__(*args, **kwargs)
-        self.fields['credential'].widget.attrs['rows'] = 3
-        self.fields['disposition'].widget.attrs['rows'] = 3
         self.fields['vacation_body'].widget.attrs['rows'] = 6
 
     def clean(self):
@@ -40,6 +38,10 @@ class MailboxForm(forms.ModelForm):
                   'disposition',
                   'vacation_enabled', 'vacation_subject', 'vacation_body',
                   'is_active' )
+        widgets = {
+            'credential': forms.TextInput(),
+            'disposition': forms.TextInput(),
+        }
 
 
 class AliasForm(forms.ModelForm):
@@ -62,10 +64,25 @@ class AliasForm(forms.ModelForm):
 
 class MapForm(forms.ModelForm):
 
-    def __init__(self, *args, **kwargs):
-        super(MapForm, self).__init__(*args, **kwargs)
-
     class Meta:
         model = Map
         fields = ('name', 'fn1', 'fn2', 'fn3', 'is_active')
 
+
+class MapValueForm(forms.ModelForm):
+    map = forms.ModelChoiceField(queryset=Map.objects.all(), empty_label=None)
+
+    def __init__(self, *args, **kwargs):
+        super(MapValueForm, self).__init__(*args, **kwargs)
+        self.fields['v1'].widget.attrs['rows'] = 1
+        self.fields['v2'].widget.attrs['rows'] = 1
+        self.fields['v3'].widget.attrs['rows'] = 1
+
+    class Meta:
+        model = MapValue
+        fields = ('map', 'key', 'v1', 'v2', 'v3')
+        widgets = {
+            'v1': forms.TextInput(),
+            'v2': forms.TextInput(),
+            'v3': forms.TextInput(),
+        }

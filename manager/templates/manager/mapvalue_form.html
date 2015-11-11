@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block title %}
+  <title>Postfix Maps Manager</title>
+{% endblock %}
+{% block content %}
+    <div class="panel panel-primary">
+
+      <div class="panel-heading">
+        <h2>Postfix Maps Manager</h2>
+      </div>
+
+      <form method="post" class="form">
+        <div class="panel-body">
+        <style type="text/css">.control-label { text-align: right; }</style>
+          <h4 color="lightgray">{% if object %}Edit{% else %}Create New{% endif %} Value</h4>
+          {% csrf_token %}
+          {% bootstrap_form form layout="horizontal" %}
+          {% buttons %}
+            <button type="submit" class="btn btn-primary"> Submit </button>
+            <button type="button" class="btn btn-primary" onclick="javascript:window.location='{% url 'maps' %}'"> Cancel </button>
+          {% endbuttons %}
+        </div>
+      </form>
+
+      <div class="panel-body">
+
+        <table width="90%" role="list" align="center" class="table table-striped">
+          <caption>Map Values</caption>
+          <tbody>
+          {% if value_list %}
+            <tr bgcolor="lightgray" role="heading">
+              <th>Map</th>
+              <th>Key</th>
+              <th>{{ map.fn1 }}</th>
+            {% if map.fn2 %}<th>{{ map.fn2 }}</th>{% endif %}
+            {% if map.fn3 %}<th>{{ map.fn3 }}</th>{% endif %}
+              <th colspan="2">Created</th>
+            </tr>
+          {% endif %}
+          {% for value in value_list %}
+            <tr role="listitem">
+              <td>{{ value.map.name }}</td>
+              <td>{{ value.key }}</td>
+              <td>{{ value.v1 }}</td>
+            {% if map.fn2 %}<th>{{ value.v2 }}</th>{% endif %}
+            {% if map.fn3 %}<th>{{ value.v3 }}</th>{% endif %}
+              <td>{{ value.created|date:'Y-m-d_H:i' }}</td>
+              <td class="text-right nowrap">
+                  <a href="{% url 'value_edit' pk=value.id%}" class="glyphicon glyphicon-edit"></a>
+                  &nbsp;&nbsp;
+                  <a href="{% url 'value_delete' pk=value.id %}" class="glyphicon glyphicon-remove"></a>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colpsan="6" class="text-center">No map value found</td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+  <script type="text/javascript">
+    $( '#id_map' ).on('change', function() {
+      window.location = '{% url 'map_values' %}' + this.value;
+    });
+  </script>
+{% endblock %}

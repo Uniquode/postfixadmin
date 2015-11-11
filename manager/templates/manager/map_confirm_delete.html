@@ -1,43 +1,51 @@
 {% extends 'base.html' %}
 {% load bootstrap3 %}
 {% block title %}
-  <title>Postfix Domain Manager</title>
+  <title>Postfix Maps Manager</title>
 {% endblock %}
 {% block content %}
     <div class="panel panel-primary">
 
       <div class="panel-heading">
-        <h2>Postfix Domain Manager</h2>
+        <h2>Postfix Maps Manager</h2>
       </div>
 
       <div class="panel-body">
-        <h4 color="lightgray">Delete Domain</h4>
+        <h4 color="lightgray">Delete Map</h4>
           <div class="table-responsive">
             <table width="90%" role="list" align="center" class="table">
-              <caption>Domain: {{ object.name }}</caption>
+              <caption>Map: {{ object.name }}</caption>
                  <tr>
-                  <th class="text-right">Description</th>
-                  <td>{{ object.description }}</td>
+                  <th class="text-right">Fieldname 1</th>
+                  <td>{{ object.fn1 }}</td>
                   <th class="text-right">Active</th>
                   <td>{{ object.is_active }}</td>
                 </tr>
                 <tr>
-                  <th class="text-right">Max Quota (MB)</th>
-                  <td>{{ object.maxquota_mb }}</td>
-                  <th class="text-right">MX2</th>
-                  <td>{{ object.is_backup_mx }}</td>
-                </tr>
-                <tr>
-                  <th class="text-right">No. of Mailboxes</th>
-                  <td>{{ object.mailboxes }}</td>
+                {% if object.fn2 %}
+                  <th class="text-right">Fieldname 2</th>
+                  <td>{{ object.fn2 }}</td>
+                {% else %}
+                  <th></th><td></td>
+                {% endif %}
                   <th class="text-right">Created</th>
                   <td>{{ object.created }}</td>
                 </tr>
                 <tr>
-                  <th class="text-right">No. of Aliases</th>
-                  <td>{{ object.aliases }}</td>
+                {% if object.fn3 %}
+                  <th class="text-right">Fieldname 3</th>
+                  <td>{{ object.fn3 }}</td>
+                {% else %}
+                  <th></th><td></td>
+                {% endif %}
                   <th class="text-right">Modified</th>
                   <td>{{ object.modified }}</td>
+                </tr>
+                <tr>
+                  <th class="text-right">Map entries</th>
+                  <td>{{ object.mapvalues_set.count }}</td>
+                  <th></th>
+                  <td></td>
                 </tr>
             </table>
           </div>
@@ -47,7 +55,7 @@
         {% csrf_token %}
         {% buttons %}
           <button type="submit" class="btn btn-primary"> Delete </button>
-          <button type="button" class="btn btn-primary" onclick="javascript:window.location='{% url 'domains' %}'"> Cancel </button>
+          <button type="button" class="btn btn-primary" onclick="javascript:window.location='{% url 'maps' %}'"> Cancel </button>
         {% endbuttons %}
         </form>
       </div>

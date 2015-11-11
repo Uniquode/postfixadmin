@@ -1,57 +1,60 @@
 {% extends 'base.html' %}
 {% load bootstrap3 %}
 {% block title %}
-  <title>Postfix Alias Management</title>
+  <title>Postfix Maps Manager</title>
 {% endblock %}
 {% block content %}
     <div class="panel panel-primary">
 
       <div class="panel-heading">
-        <h2>Postfix Alias Manager</h2>
+        <h2>Postfix Maps Manager</h2>
       </div>
 
       <div class="panel-body">
       <style type="text/css">.control-label { text-align: right; }</style>
-        <h4 color="lightgray">{% if object %}Edit{% else %}Create{% endif %} Alias</h4>
+        <h4 color="lightgray">{% if object %}Edit{% else %}Create New{% endif %} Map</h4>
         <form method="post" class="form">
             {% csrf_token %}
             {% bootstrap_form form layout="horizontal" %}
             {% buttons %}
               <button type="submit" class="btn btn-primary"> Submit </button>
-              <button type="button" class="btn btn-primary" onclick="javascript:window.location='{% url 'aliases' %}'"> Cancel </button>
+              <button type="button" class="btn btn-primary" onclick="javascript:window.location='{% url 'maps' %}'"> Cancel </button>
             {% endbuttons %}
         </form>
       </div>
 
       <div class="panel-body">
+
         <table width="90%" role="list" align="center" class="table table-striped">
-          <caption>Alias List</caption>
+          <caption>Maps List</caption>
           <tbody>
-          {% if alias_list %}
+          {% if map_list %}
             <tr bgcolor="lightgray" role="heading">
-              <th>Domain</th>
-              <th>Address</th>
+              <th>Map Name</th>
               <th>Active</th>
-              <th>Disposition</th>
+              <th>Fieldname 1</th>
+              <th>Fieldname 2</th>
+              <th>Fieldname 3</th>
               <th colspan="2">Created</th>
             </tr>
           {% endif %}
-          {% for alias in alias_list %}
+          {% for map in map_list %}
             <tr role="listitem">
-              <td>{{ alias.domain.name }}</td>
-              <td>{{ alias.address }}</td>
-              <td>{{ alias.is_active }}</td>
-              <td>{{ alias.disposition }}</td>
-              <td>{{ alias.created|date:'Y-m-d_H:i' }}</td>
+              <td><a href="{% url 'map_values' map_id=map.id %}">{{ map.name }}</a></td>
+              <td>{{ map.is_active }}</td>
+              <td>{{ map.fn1 }}</td>
+              <td>{{ map.fn2 }}</td>
+              <td>{{ map.fn3 }}</td>
+              <td>{{ map.created|date:'Y-m-d_H:i' }}</td>
               <td class="text-right nowrap">
-                  <a href="{% url 'alias_edit' pk=alias.id %}" class="glyphicon glyphicon-edit"></a>
+                  <a href="{% url 'map_edit' pk=map.id %}" class="glyphicon glyphicon-edit"></a>
                   &nbsp;&nbsp;
-                  <a href="{% url 'alias_delete' pk=alias.id %}" class="glyphicon glyphicon-remove"></a>
+                  <a href="{% url 'map_delete' pk=map.id %}" class="glyphicon glyphicon-remove"></a>
               </td>
             </tr>
           {% empty %}
             <tr>
-              <td colpsan="6" class="text-center">No aliases found</td>
+              <td colpsan="6" class="text-center">No map found</td>
             </tr>
           {% endfor %}
           </tbody>
