@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.db import models
 
 
@@ -16,6 +15,7 @@ class Domain(Record):
     name = models.CharField(max_length=255, unique=True)
     description = models.CharField(max_length=255, blank=True)
     transport = models.CharField(max_length=255, blank=True)
+    disposition = models.CharField(verbose_name='Default Disposition', max_length=255, blank=True)
     maxquota_mb = models.IntegerField(verbose_name='Max Quota', default=0)
     is_backup_mx = models.BooleanField(verbose_name='Backup MX', default=False)
     allow_mailbox = models.BooleanField(verbose_name='Allow New Mailboxes', default=True)

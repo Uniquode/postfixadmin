@@ -12,8 +12,8 @@ class DomainForm(forms.ModelForm):
 
     class Meta:
         model = Domain
-        fields = ('name', 'description', 'transport', 'maxquota_mb',
-                  'auth_source',
+        fields = ('name', 'description', 'transport', 'disposition',
+                  'maxquota_mb', 'auth_source',
                   'is_backup_mx', 'allow_mailbox', 'is_active')
 
 
