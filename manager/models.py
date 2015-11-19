@@ -36,6 +36,10 @@ class Domain(Record):
     def __str__(self):
         return self.name
 
+    class Meta:
+        unique_together = ('name',)
+        db_table = 'domain'
+
 
 class Mailbox(Record):
     """ Mailboxes """
@@ -58,6 +62,7 @@ class Mailbox(Record):
         return self.address
 
     class Meta:
+        db_table = 'mailbox'
         unique_together = ('domain', 'username',)
 
 
@@ -75,6 +80,7 @@ class Alias(Record):
         return self.address
 
     class Meta:
+        db_table = 'alias'
         unique_together = ('domain', 'name',)
 
 
@@ -88,6 +94,10 @@ class Map(Record):
     def __str__(self):
         return self.name
 
+    class Meta:
+        db_table = 'map'
+        unique_together = ('name',)
+
 
 class MapValue(Record):
     """ Generic key->value mappings for maps """
@@ -100,3 +110,7 @@ class MapValue(Record):
     def __str__(self):
         return "{0}:{1}={2}".format(self.map, self.key,
                 ':'.join([ x for x in (self.v1, self.v2, self.v3) if x is not None ]))
+
+    class Meta:
+        db_table = 'mapvalue'
+        unique_together = ('map', 'key',)
