@@ -37,7 +37,6 @@ class Domain(Record):
         return self.name
 
     class Meta:
-        unique_together = ('name',)
         db_table = 'domain'
 
 

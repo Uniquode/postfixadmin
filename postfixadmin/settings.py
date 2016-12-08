@@ -85,7 +85,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'email',
         'USER': 'david',
-        'PASSWORD': '',
+        'PASSWORD': 'hMP4XMQP',
         'HOST': '192.168.146.67',
         'PORT': '3306',
     }
